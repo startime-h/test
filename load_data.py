@@ -15,7 +15,6 @@ def get_sample_csv_v(ids, path_to_features, take_all=False):
                 orig[i] = file_list
         # 列表迭代器过滤出csv文件
     orig_x = []
-    orig_y = []
     y_vs = []
     y_as = []
     y_ds = []
@@ -105,6 +104,3 @@ def to_category(y, values):
     out = np.array(y == values)
     ones = np.ones(out.shape)
     return (out * ones).reshape(y_shape[1], v_shape[0])
-
-
-orig_x, y_vs, y_as, y_ds, y_genders, y_emotions = get_sample("F:\\Session1\\dialog\\feature\\Ses01F_impro01\\")

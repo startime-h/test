@@ -1,12 +1,15 @@
 from keras import Input
 from keras import optimizers
-from keras.callbacks import EarlyStopping
-from keras.layers import Dense, Flatten, regularizers
+from keras.layers import Dense, Flatten
 from keras.models import Model
-from keras.optimizers import RMSprop
 
 
 def build_model_emotion1():
+    """
+    构建模型, 三个隐藏层, 使用的是sigmoid激活函数
+    最后一层使用softmax
+    :return: model
+    """
     main_input = Input(shape=(1, 88), name='main_input')
     x = Dense(64, activation='sigmoid')(main_input)
     x = Dense(64, activation='sigmoid')(x)
@@ -16,7 +19,7 @@ def build_model_emotion1():
     y_emotion = Dense(8, activation='softmax')(x)
 
     model = Model(inputs=[main_input], outputs=[y_emotion])
-    model.compile(optimizer='rmsprop', loss='mean_squared_error',
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
     sgd = optimizers.sgd(lr=0.01)
@@ -30,6 +33,11 @@ def build_model_emotion1():
 
 
 def build_model_emotion():
+    """
+    构建模型, 三个隐藏层, 使用的是sigmoid激活函数
+    最后一层使用softmax
+    :return: model
+    """
     main_input = Input(shape=(1, 88), name='main_input')
 
     x = Flatten()(main_input)
@@ -39,7 +47,7 @@ def build_model_emotion():
     model = Model(inputs=[main_input], outputs=[y_emotion])
     sgd = optimizers.sgd(lr=0.01)
     model.compile(optimizer=sgd,
-                  loss='binary_crossentropy',
+                  loss='categorical_crossentropy',
                   metrics=['accuracy'])
     model.summary()
 
@@ -47,20 +55,27 @@ def build_model_emotion():
 
 
 def build_model_e_g():
+    """
+    构建模型, 三个隐藏层, 使用的是sigmoid激活函数
+    最后一层使用softmax
+    :return: model
+    """
     main_input = Input(shape=(1, 88), name='main_input')
     x = Dense(64, activation='sigmoid')(main_input)
     x = Dense(64, activation='sigmoid')(x)
     x = Dense(64, activation='sigmoid')(x)
 
     x = Flatten()(x)
-    y_gender = Dense(2, activation='sigmoid')(x)
-    y_emotion = Dense(4, activation='softmax')(x)
+
+    y_emotion = Dense(8, activation='softmax')(x)
+    y_gender = Dense(2, activation='softmax')(x)
 
     model = Model(inputs=[main_input], outputs=[y_emotion, y_gender])
-    model.compile(optimizer='rmsprop', loss='mean_squared_error',
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
     sgd = optimizers.sgd(lr=0.01)
+
     model.compile(loss='binary_crossentropy',
                   optimizer=sgd,
                   metrics=['accuracy'])

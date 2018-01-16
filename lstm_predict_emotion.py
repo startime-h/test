@@ -62,7 +62,7 @@ print("test accuracy: ", accuracy)
 plt.plot(hist_g.history['loss'])
 plt.plot(hist_g.history['val_loss'])
 
-plt.title("relu level3 batch 100 category4 sgd")
+plt.title("只包含softmax激活层模型  ", fontproperties='SimHei', fontsize=15)
 plt.ylabel("loss")
 plt.xlabel("epoch")
 plt.legend(["train", "test"], loc="upper right")
