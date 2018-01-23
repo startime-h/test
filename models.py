@@ -94,7 +94,9 @@ def build_model_VAD_M2():
     """
     main_input = Input(shape=(1, 6373), name='main_input')
 
-    x = Dropout(rate=0.5)(main_input)
+    x = Dense(64, activation='sigmoid')(main_input)
+
+    x = Dropout(rate=0.5)(x)
 
     x = Flatten()(x)
 
@@ -104,7 +106,8 @@ def build_model_VAD_M2():
 
     model = Model(inputs=[main_input], outputs=[v, a, d])
     sgd = optimizers.sgd(lr=1e-4)
-    model.compile(loss={'v_out': 'mse', 'a_out': 'mse', 'd_out': 'mse'}, optimizer='rmsprop',
+    model.compile(loss={'v_out': 'mse', 'a_out': 'mse', 'd_out': 'mse'},
+                  loss_weights={'v_out': 0.2, 'a_out': 0.6, 'd_out': 0.2}, optimizer='rmsprop',
                   metrics=['accuracy'])
 
     model.summary()
@@ -129,7 +132,8 @@ def build_model_VAD_M1():
 
     model = Model(inputs=[main_input], outputs=[v, a, d])
     sgd = optimizers.sgd(lr=1e-4)
-    model.compile(loss={'v_out': 'mse', 'a_out': 'mse', 'd_out': 'mse'}, optimizer='rmsprop',
+    model.compile(loss={'v_out': 'mse', 'a_out': 'mse', 'd_out': 'mse'},
+                  loss_weights={'v_out': 0.2, 'a_out': 0.6, 'd_out': 0.2}, optimizer='rmsprop',
                   metrics=['accuracy'])
 
     model.summary()

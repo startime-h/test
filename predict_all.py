@@ -6,7 +6,7 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
 from load_data import get_sample_csv_v, to_category
-from refer import predict_All
+from models import predict_All
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -52,7 +52,6 @@ hist = model.fit(X_train, [y_train_emotion, y_v_train, y_a_train, y_d_train], ba
 
 score = model.evaluate(X_test, [y_test_emotion, y_v_test, y_a_test, y_d_test])
 
-print(score)
 
 plt.plot(hist.history['loss'])
 plt.plot(hist.history['val_loss'])

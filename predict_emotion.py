@@ -7,7 +7,7 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
 from load_data import get_sample_csv_v, to_category
-from refer import build_model_emotion, build_model_emotion1
+from models import build_model_emotion, build_model_emotion1
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 np.random.seed(32)

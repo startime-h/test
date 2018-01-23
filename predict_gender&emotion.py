@@ -6,9 +6,8 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
 from load_data import get_sample_csv_v, to_category
-from refer import build_model_e_g
-from keras.utils import np_utils
-# gender level
+from models import build_model_e_g
+
 nb_epoch = 50
 batch_size = 10
 
