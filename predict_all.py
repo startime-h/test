@@ -10,14 +10,17 @@ from models import predict_All
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-np.random.seed(1001)
+np.random.seed(1001)  # 设置随机种子, 保证结果可重复
+
 
 available_emotions = np.array(['ang', 'exc', 'neu', 'sad', 'fru', 'hap', 'fea', 'dis'])
 
+# 1.设置一些训练参数
 np_epoch = 50
 
 batch_size = 200
 
+# 2.这里一次获取所有需要的值，后续根据需要转接使用
 X, y_v, y_a, y_d, y_gender, y_emotion = get_sample_csv_v(
     ids=None, path_to_features='C:\\BaiduYunDownload\\features-6373\\features2\\', take_all=True)
 
@@ -35,7 +38,7 @@ shape0 = X_train.shape[0]
 shape1 = X_train.shape[1]
 shape2 = X_train.shape[2]
 
-# 3.1 standardize the data directly
+# 3.1 归一化数据
 reshapeX_train = preprocessing.scale(np.reshape(X_train, (shape0, shape2)))
 reshapeX_test = preprocessing.scale(np.reshape(X_test, (X_test.shape[0], X_test.shape[2])))
 
@@ -47,12 +50,14 @@ X_test = norX_test.reshape(X_test.shape)
 
 model = predict_All()
 
+# 4.开始训练
 hist = model.fit(X_train, [y_train_emotion, y_v_train, y_a_train, y_d_train], batch_size=batch_size, epochs=np_epoch,
-                 validation_data=(X_test, [y_test_emotion, y_v_test, y_a_test, y_d_test]))
+                 validation_split=0.2)
 
+# 5.评估效果
 score = model.evaluate(X_test, [y_test_emotion, y_v_test, y_a_test, y_d_test])
 
-
+# 6.绘图
 plt.plot(hist.history['loss'])
 plt.plot(hist.history['val_loss'])
 plt.show()

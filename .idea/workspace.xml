@@ -4,10 +4,6 @@
     <list default="true" id="aae07efa-7997-45d6-90e9-b66ed4afa86d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/predict_all.py" afterPath="$PROJECT_DIR$/predict_all.py" />
-      <change beforePath="$PROJECT_DIR$/predict_emotion.py" afterPath="$PROJECT_DIR$/predict_emotion.py" />
-      <change beforePath="$PROJECT_DIR$/predict_gender&amp;emotion.py" afterPath="$PROJECT_DIR$/predict_gender&amp;emotion.py" />
-      <change beforePath="$PROJECT_DIR$/predict_vad.py" afterPath="$PROJECT_DIR$/predict_vad.py" />
-      <change beforePath="$PROJECT_DIR$/refer.py" afterPath="$PROJECT_DIR$/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,8 +51,8 @@
       <file leaf-file-name="predict_all.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/predict_all.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state relative-caret-position="348">
+              <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -546,8 +542,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/predict_all.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+        <state relative-caret-position="348">
+          <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
