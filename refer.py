@@ -20,7 +20,7 @@ def build_model_emotion1():
     x = Flatten()(x)
 
     y_emotion = Dense(8, activation='softmax')(x)
-    rmsprop = optimizers.RMSprop(lr=1e-4, )
+
     model = Model(inputs=[main_input], outputs=[y_emotion])
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy',
                   metrics=['accuracy'])
@@ -28,7 +28,7 @@ def build_model_emotion1():
     sgd = optimizers.sgd(lr=0.01)
 
     model.compile(loss='binary_crossentropy',
-                  optimizer=sgd,
+                  optimizer='rmsprop',
                   metrics=['accuracy'])
     model.summary()
 
@@ -49,7 +49,7 @@ def build_model_emotion():
 
     model = Model(inputs=[main_input], outputs=[y_emotion])
     sgd = optimizers.sgd(lr=0.01)
-    model.compile(optimizer=sgd,
+    model.compile(optimizer='rmsprop',
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])
     model.summary()
@@ -87,13 +87,14 @@ def build_model_e_g():
     return model
 
 
-def build_model_v_a_d():
+def build_model_VAD_M2():
+    """
+    DNN分层（包含age、gender子属性，但不输出），并行学习出AVD三个属性
+    :return:model
+    """
     main_input = Input(shape=(1, 6373), name='main_input')
-    x = Dense(64, activation='sigmoid')(main_input)
-    x = Dense(64, activation='sigmoid')(x)
-    x = Dropout(rate=0.5)(x)
-    x = Dense(64, activation='sigmoid')(x)
-    x = Dropout(rate=0.5)(x)
+
+    x = Dropout(rate=0.5)(main_input)
 
     x = Flatten()(x)
 
@@ -103,7 +104,7 @@ def build_model_v_a_d():
 
     model = Model(inputs=[main_input], outputs=[v, a, d])
     sgd = optimizers.sgd(lr=1e-4)
-    model.compile(loss={'v_out': concordance_cc, 'a_out': concordance_cc, 'd_out': concordance_cc}, optimizer='rmsprop',
+    model.compile(loss={'v_out': 'mse', 'a_out': 'mse', 'd_out': 'mse'}, optimizer='rmsprop',
                   metrics=['accuracy'])
 
     model.summary()
@@ -111,7 +112,37 @@ def build_model_v_a_d():
     return model
 
 
-def my_model():
+def build_model_VAD_M1():
+    """
+    DNN不分层，并行学习VAD三个属性（一次学习）
+    :return: model
+    """
+    main_input = Input(shape=(1, 6373), name='main_input')
+
+    x = Dropout(rate=0.5)(main_input)
+
+    x = Flatten()(x)
+
+    v = Dense(1, activation='relu', name='v_out')(x)
+    a = Dense(1, activation='relu', name='a_out')(x)
+    d = Dense(1, activation='relu', name='d_out')(x)
+
+    model = Model(inputs=[main_input], outputs=[v, a, d])
+    sgd = optimizers.sgd(lr=1e-4)
+    model.compile(loss={'v_out': 'mse', 'a_out': 'mse', 'd_out': 'mse'}, optimizer='rmsprop',
+                  metrics=['accuracy'])
+
+    model.summary()
+
+    return model
+
+
+def predict_All():
+    """
+    DNN分层（age、gender），并行学习VAD、age、gender五个属性。
+    Age、gender的识别率
+    :return:
+    """
     main_input = Input(shape=(1, 6373), name='main_input')
     x = Dense(64, activation='sigmoid')(main_input)
     x = Dense(32, activation='sigmoid')(x)

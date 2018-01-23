@@ -10,7 +10,7 @@ def get_sample_csv_v(ids, path_to_features, take_all=False):
         files = os.listdir(path_to_features)  # 列出文件夹下所有文件, files是一个list
         for i in files:
             if '.' not in i:
-                file = os.listdir(path_to_features + i + '/')
+                file = os.listdir(path_to_features + i + '//')
                 file_list = np.sort([f[:-4] for f in file if f.endswith(".csv")])
                 orig[i] = file_list
         # 列表迭代器过滤出csv文件

@@ -18,11 +18,12 @@ batch_size = 50
 available_emotions = np.array(['ang', 'exc', 'neu', 'sad', 'fru', 'hap', 'fea', 'dis'])
 # available_emotions = np.array(['ang', 'exc', 'neu', 'sad'])
 
-model_g = build_model_emotion()
+model_g = build_model_emotion1()
 
 # 2.getFeature
 X, y_v, y_a, y_d, y_gender, y_emotion = get_sample_csv_v(
-    ids=None, path_to_features='F:\\Session1\\dialog\\feature\\', take_all=True)
+    ids=None, path_to_features='C:\\BaiduYunDownload\\features-6373\\features2\\', take_all=True)
+
 
 # 3.将数据分测试集、验证集
 idxs_train, idxs_test = train_test_split(range(X.shape[0]), test_size=0.2)
@@ -48,12 +49,14 @@ X_test = norX_test.reshape(X_test.shape)
 
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=2)
+
 hist_g = model_g.fit(X_train, y_train_emotion,
                      batch_size=batch_size, epochs=nb_epoch, verbose=1,
                      validation_data=(X_test, y_test_emotion), callbacks=[early_stopping])
 
 # 5.Returns the loss value & metrics values for the model in test mode.
 loss, accuracy = model_g.evaluate(X_test, y_test_emotion)
+
 
 model_g.save('emotion_predict.h5')
 print("test loss: ", loss)
@@ -62,7 +65,7 @@ print("test accuracy: ", accuracy)
 plt.plot(hist_g.history['loss'])
 plt.plot(hist_g.history['val_loss'])
 
-plt.title("只包含softmax激活层模型  ", fontproperties='SimHei', fontsize=15)
+plt.title("只包含softmax激活层模型", fontproperties='SimHei', fontsize=15)
 plt.ylabel("loss")
 plt.xlabel("epoch")
 plt.legend(["train", "test"], loc="upper right")

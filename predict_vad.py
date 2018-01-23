@@ -3,15 +3,15 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
 from load_data import *
-from refer import build_model_v_a_d
+from refer import build_model_VAD_M1
 import numpy as np
 np.random.seed(1337)
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-nb_epoch = 50
-batch_size = 50
-model = build_model_v_a_d()
+nb_epoch = 100
+batch_size = 256
+model = build_model_VAD_M1()
 
 # 2.getFeature
 X, y_v, y_a, y_d, y_gender, y_emotion = get_sample_csv_v(
@@ -48,10 +48,10 @@ hist_g = model.fit(
 
 score = model.evaluate(X_test, [y_v_test, y_a_test, y_d_test], batch_size=256)
 
-print("\nscore:", score)
-print("\ntest loss: ", score[0])
-print("test accuracy: ", score[1])
-print("history:", hist_g.history)
+# print("\nscore:", score)
+# print("\ntest loss: ", score[0])
+# print("test accuracy: ", score[1])
+# print("history:", hist_g.history)
 plt.plot(hist_g.history['loss'])
 plt.plot(hist_g.history['val_loss'])
 
@@ -61,7 +61,3 @@ plt.ylabel("loss")
 plt.xlabel("epoch")
 plt.legend(["train", "test"], loc="upper right")
 plt.show()
-
-filepath = "v_a_d_model.h5"
-
-model.save(filepath)
